@@ -8,6 +8,9 @@ import (
 
 // GetEnv : function to read an environment or return a default value
 func GetEnv(key string, defaultVal string) string {
+	if defaultVal == "" {
+		defaultVal = "Default value kosong"
+	}
 	if value, exists := os.LookupEnv(key); exists {
 		return value
 	}
