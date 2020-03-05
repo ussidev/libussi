@@ -8,6 +8,7 @@ import (
 
 // GetEnv : function to read an environment or return a default value
 func GetEnv(key string, defaultVal string) string {
+	defaultVal = "Default value kosong"
 	if defaultVal == "" {
 		defaultVal = "Default value kosong"
 	}
