@@ -4,48 +4,52 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
-// GetEnv : function to read an environment or return a default value
-func GetEnv(key string, defaultVal string) string {
-	defaultVal = "Default value kosong"
-	if defaultVal == "" {
-		defaultVal = "Default value kosong"
-	}
+//LoadFromFile : load parameter from .env
+func LoadFromFile() error {
+	return godotenv.Load(".env")
+
+}
+
+// GetVal : function to read an environment or return a default value
+func GetVal(key string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
 	}
-	return defaultVal
+	return ""
 }
 
-// GetEnvAsInt : function to read an environment variable into integer or return a default value
-func GetEnvAsInt(name string, defaultVal int) int {
-	valueStr := GetEnv(name, "")
+// GetValAsInt : function to read an environment variable into integer or return a default value
+func GetValAsInt(name string) int {
+	valueStr := GetVal(name)
 	if value, err := strconv.Atoi(valueStr); err == nil {
 		return value
 	}
-	return defaultVal
+	return 0
 }
 
-// GetEnvAsBool : function to read an environment variable into a bool or return default value
-func GetEnvAsBool(name string, defaultVal bool) bool {
-	valStr := GetEnv(name, "")
+// GetValAsBool : function to read an environment variable into a bool or return default value
+func GetValAsBool(name string) bool {
+	valStr := GetVal(name)
 	if val, err := strconv.ParseBool(valStr); err == nil {
 		return val
 	}
 
-	return defaultVal
+	return false
 }
 
-// GetEnvAsSlice : function to read an environment variable into a string slice or return default value
+// GetValAsSlice : function to read an environment variable into a string slice or return default value
 // Print out each role
 //for _, role := range conf.UserRoles {
 //	fmt.Println(role)
 //    }
-func GetEnvAsSlice(name string, defaultVal []string, sep string) []string {
-	valStr := GetEnv(name, "")
+func GetValAsSlice(name string, sep string) []string {
+	valStr := GetVal(name)
 	if valStr == "" {
-		return defaultVal
+		return []string{}
 	}
 	val := strings.Split(valStr, sep)
 	return val
